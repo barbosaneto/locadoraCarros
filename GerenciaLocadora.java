@@ -44,8 +44,31 @@ public class GerenciaLocadora{
 
     }
 
+    // pega a string inteira que o usuario digita e a processa para obter toda informacao necessaria
+    public void processaEntrada(String entrada){
+
+        String[] comandos = entrada.split(":");
+        String tipoCliente = comandos[0];
+        if(tipoCliente == null || !tipoCliente.equalsIgnoreCase("Normal") || !tipoCliente.equalsIgnoreCase("Fidelidade")){
+            System.out.println("Tipo de cliente inválido!");
+        }
+
+        int numPassageiros = -1;
+        numPassageiros = Integer.parseInt(comandos[1]);
+        if(numPassageiros == -1 || numPassageiros < 1 || numPassageiros > 7){
+            System.out.println("Quantidade de passageiros invalída!");
+        }
+
+        String datas = comandos[2];
+        if(datas == null){
+            System.out.println("Datas inválidas!");
+        }
+        
+        processaData(datas);
+
+    }
     //descobre qual o dia da semana de determinada data
     public void processaData(String data){
-        
+
     }
 }
