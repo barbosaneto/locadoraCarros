@@ -1,3 +1,4 @@
+import java.text.ParseException;
 import java.util.Scanner;
 
 public class Principal {
@@ -21,7 +22,16 @@ public class Principal {
         System.out.print(">");
         String comando = scan.nextLine();
 
-        gerencia.processaEntrada(comando);
+
+        try {
+			gerencia.processaEntrada(comando);
+		} catch (ParseException e) {
+			e.printStackTrace();
+        }
+        
+        gerencia.processaData();
+        gerencia.cotacaoAluguel();
+        gerencia.comparaCotacao();
 
     }
 }
