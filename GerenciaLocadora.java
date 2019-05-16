@@ -1,6 +1,7 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class GerenciaLocadora{
@@ -10,8 +11,8 @@ public class GerenciaLocadora{
     private int numPassageiros = -1;
     private ArrayList<Date> datasSeparadas = new ArrayList<>();
     private SimpleDateFormat formatoData = new SimpleDateFormat("dd-MM-yyyy");
-    private int qtdMeioSemana; // quantidade de dias que são do meio da semana (considerando as dadas que o usuario forneceu)
-    private int qtdFds; // quantidade de dias que são fds (considerando as dadas que o usuario forneceu)
+    private int qtdMeioSemana = 0; // quantidade de dias que são do meio da semana (considerando as dadas que o usuario forneceu)
+    private int qtdFds = 0; // quantidade de dias que são fds (considerando as dadas que o usuario forneceu)
 
     public void criaLocadoras(){
         //cria locadora southcar
@@ -34,11 +35,13 @@ public class GerenciaLocadora{
     }
 
     // pega a string inteira que o usuario digita e a processa para obter toda informacao necessaria
-    public void processaEntrada(String entrada) throws ParseException{
+    // retorna 0 caso ocorra algum erro, retorna 1 caso tudo de certo.
+    public int processaEntrada(String entrada) throws ParseException{
 
         String[] comandos = entrada.split(":");
         if(comandos[0] == null || !comandos[0].equalsIgnoreCase("Normal") || !comandos[0].equalsIgnoreCase("Fidelidade")){
             System.out.println("Tipo de cliente inválido!");
+            return 0;
         }
         else{
             setTipoCliente(comandos[0]);
@@ -46,6 +49,7 @@ public class GerenciaLocadora{
 
         if(Integer.parseInt(comandos[1]) == -1 || Integer.parseInt(comandos[1]) < 1 || Integer.parseInt(comandos[1]) > 7){
             System.out.println("Quantidade de passageiros invalída!");
+            return 0;
         }
         else{
             setNumPassageiros(Integer.parseInt(comandos[1]));
@@ -53,6 +57,7 @@ public class GerenciaLocadora{
 
         if(comandos[2] == null){
             System.out.println("Datas inválidas!");
+            return 0;
         }
         else{
             String datas = comandos[2];
@@ -65,10 +70,24 @@ public class GerenciaLocadora{
 
         }
 
+        return 1;
     }
 
      //descobre qual o dia da semana de determinada data
      public void processaData(){
+         for (Date data : datasSeparadas) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(data); 
+            int dia = cal.get(Calendar.DAY_OF_WEEK);
+
+            //se dia for domingo (dia == 1) ou sexta (dia == 7)
+            if(dia == 1 || dia == 7){
+                qtdFds++;
+            }
+            else{
+                qtdMeioSemana++;
+            }
+         }
         
     }
 
@@ -113,13 +132,7 @@ public class GerenciaLocadora{
     public int getQtdMeioSemana(){
         return qtdMeioSemana;
     }
-    public void setQtdMeioSemana(int qtdMeioSemana){
-        this.qtdMeioSemana = qtdMeioSemana;
-    }
     public int getQtdFds(){
         return qtdFds;
-    }
-    public void setQtdFds(int qtdFds){
-        this.qtdFds = qtdFds;
     }
 }

@@ -24,11 +24,15 @@ public class Principal {
 
 
         try {
-			gerencia.processaEntrada(comando);
+            int retorno = gerencia.processaEntrada(comando);
+            if(retorno == 0){
+                System.out.println("Execute a aplicação novamente!");
+                return;
+            }
 		} catch (ParseException e) {
 			e.printStackTrace();
         }
-        
+
         gerencia.processaData();
         gerencia.cotacaoAluguel();
         gerencia.comparaCotacao();
