@@ -39,7 +39,7 @@ public class GerenciaLocadora{
     public int processaEntrada(String entrada) throws ParseException{
 
         String[] comandos = entrada.split(":");
-        if(comandos[0] == null || !comandos[0].equalsIgnoreCase("Normal") || !comandos[0].equalsIgnoreCase("Fidelidade")){
+        if(comandos[0] == null || ! (comandos[0].equalsIgnoreCase("Normal") || comandos[0].equalsIgnoreCase("Fidelidade"))){
             System.out.println("Tipo de cliente inválido!");
             return 0;
         }
@@ -94,11 +94,41 @@ public class GerenciaLocadora{
     // calcula o preco do aluguel em todas locadoras com base na entrada do usuario
     public void cotacaoAluguel(){
 
-    }
-
-     // compara as cotacoes e ve qual a mais barata para o usuario
-     public void comparaCotacao(){
-
+        // se o num de pessoas for maior que 4, a unica locadora possivel é a de SUV's
+        if(getNumPassageiros() > 4){
+            Locadora northCar = getLocadora("NorthCar");
+            System.out.println(northCar.getNomeVeiculo() + ": " + northCar.getNomeLocadora());
+            return;
+        }
+        else{
+            // se nao for maior que quatro mas for maior que dois, a unica locadora mais barata possivel e a de compactos
+            if(getNumPassageiros() > 2){
+                Locadora southCar = getLocadora("SouthCar");
+                System.out.println(southCar.getNomeVeiculo() + ": " + southCar.getNomeLocadora());
+                return;
+            }   
+            else{
+                //Se o numero de passageiros for de 2 pra baixo, devem ser cotados todos os dois mais baratos 
+                // (compactos e esportivos) e ver qual e mais barato
+                Locadora southCar = getLocadora("SouthCar");
+                double precoSouthCar = southCar.calculaPrecoAluguel(tipoCliente, qtdMeioSemana, qtdFds);
+                Locadora westCar = getLocadora("WestCar");
+                double precoWestCar = westCar.calculaPrecoAluguel(tipoCliente, qtdMeioSemana, qtdFds);
+                if(precoSouthCar == -1 || precoWestCar == -1){
+                    System.out.println("Erro ao calcular preco do aluguel");
+                }
+                else{
+                    if (precoWestCar >= precoSouthCar){
+                        System.out.println(westCar.getNomeVeiculo()+ ": " + westCar.getNomeLocadora());
+                        return;
+                    }
+                    else{
+                        System.out.println(southCar.getNomeVeiculo() + ": " + southCar.getNomeLocadora());
+                        return;
+                    }
+                }  
+            }
+        }
     }
 
     // busca uma locadora dada o seu nome. Caso não encontre, retorna null

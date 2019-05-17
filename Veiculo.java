@@ -6,6 +6,7 @@ public class Veiculo{
     public Veiculo(int numPassageiros, String modeloVeiculo, String tipo){
         this.numPassageiros = numPassageiros;
         this.tipo = tipo;
+        this.modeloVeiculo = modeloVeiculo;
     }
     public String getModeloVeiculo(){
         return modeloVeiculo;

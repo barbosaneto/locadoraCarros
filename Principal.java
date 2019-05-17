@@ -35,7 +35,6 @@ public class Principal {
 
         gerencia.processaData();
         gerencia.cotacaoAluguel();
-        gerencia.comparaCotacao();
 
     }
 }

@@ -15,12 +15,30 @@ public class Locadora{
         this.valorFdsFidel = valorFdsFidel;
     }
 
+    // retorna o valor do aluguel dada uma locadora, ou retorna null caso ocorra algum erro
+    public double calculaPrecoAluguel(String tipoCliente, int qtdMeioSemana, int qtdFds){
+        double resultado = -1;
+        if(tipoCliente.equalsIgnoreCase("Normal")){
+            // calcula com os precos normais
+            resultado = (qtdMeioSemana*valorSegSextReg) + (qtdFds*valorFdsReg);            
+        }
+        else{
+            // quer dizer que e cliente fidelidade...
+            resultado = (qtdMeioSemana*valorSegSextFidel) + (qtdFds*valorFdsFidel);
+        }
+
+        return resultado;
+    }
     public String getNomeLocadora(){
         return nomeLocadora;
     }
 
     public Veiculo getVeiculo(){
         return tipoVeiculo;
+    }
+
+    public String getNomeVeiculo(){
+        return tipoVeiculo.getModeloVeiculo();
     }
 
     public double getValorSegSextReg(){
