@@ -17,7 +17,7 @@ Esse exercício é um teste prático que faz parte do processo seletivo 04-2019 
 O modelo de entrada de dados que o projeto suporta é o seguinte:
 &nbsp;
 
-* <TipoCliente>:<Quantidade_Passageiros>:<Data1>,<Data2>...
+* TipoCliente:Quantidade_Passageiros:Data1,Data2...
 &nbsp;
 
 **OBS**: Os tipos de clientes suportados pelo projeto são: "Normal" e "Fidelidade".
